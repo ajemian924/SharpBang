@@ -13,3 +13,4 @@ By petitioning the software as a medical device we will get insurance companies 
 ## Team Names
 - Ajemian Beckworth
 - Michael McFarlin
+- Connor Hewitt
