@@ -1,1 +1,5 @@
-# Nothing available for now
+# C++ Ignore Files
+*.o
+*.exe
+*.out
+.vscode/
