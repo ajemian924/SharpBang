@@ -1,5 +1,6 @@
 # Run With Transformers
-# !pip install -q transformers torch pillow gradio
+# pip install -q transformers torch pillow gradio
+# FOR WINDOWS MACHINES: py -m pip install transformers torch pillow gradio
 import gradio as gr
 from transformers import AutoImageProcessor
 from transformers import SiglipForImageClassification
