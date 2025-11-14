@@ -9,11 +9,12 @@ def login_logic(request):
     username = data.get("username")
     password = data.get("password")
 
-    user = authenticate(request, username=username, password=password)
+    user = checking(request, username=username, password=password)
 
     if user is None:
         return JsonResponse({"error": "Invalid username or password"}, status=401)
 
     login(request, user)
     return JsonResponse({"message": "Login successful", "username": username})
+
 
