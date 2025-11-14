@@ -1,4 +1,3 @@
-# accounts/views.py
 from django.contrib.auth.models import User
 from django.contrib.auth import login
 from django.http import JsonResponse
@@ -21,3 +20,4 @@ def signup_logic(request):
     login(request, user)
 
     return JsonResponse({"message": "Signup successful", "username": username})
+
