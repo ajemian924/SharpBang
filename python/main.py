@@ -7,6 +7,17 @@ from transformers import SiglipForImageClassification
 from transformers.image_utils import load_image
 from PIL import Image
 import torch
+from flask import flask, render_template
+
+app = flask
+
+@app.route('/')
+def home():
+        data = {"title": "My Flask Website", "message": "Hello from python"}
+        return render_template('index.html', data=data)
+
+if __name__ == '__main__':
+    app.run(debug=true)
 
 # Load model and processor
 model_name = "prithivMLmods/Alphabet-Sign-Language-Detection"
@@ -32,15 +43,15 @@ def sign_language_classification(image):
     
     return predictions
 
-# Create Gradio interface
-iface = gr.Interface(
-    fn=sign_language_classification,
-    inputs=gr.Image(type="numpy"),
-    outputs=gr.Label(label="Prediction Scores"),
-    title="Alphabet Sign Language Detection",
-    description="Upload an image to classify it into one of the 26 sign language alphabet categories."
-)
+
+#iface = gr.Interface(
+ #   fn=sign_language_classification,
+  #  inputs=gr.Image(type="numpy"),
+   # outputs=gr.Label(label="Prediction Scores"),
+    #title="Alphabet Sign Language Detection",
+    #description="Upload an image to classify it into one of the 26 sign language alphabet categories."
+#)
 
 # Launch the app
-if __name__ == "__main__":
-    iface.launch()
+#if __name__ == "__main__":
+#    iface.launch()
