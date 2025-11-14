@@ -1,5 +1,3 @@
-# C++ Ignore Files
-*.o
-*.exe
-*.out
 .vscode/
+.gradio/
+node_modules/
