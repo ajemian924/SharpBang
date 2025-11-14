@@ -1,4 +1,4 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import checking, login
 
 @csrf_exempt
 def login_logic(request):
@@ -16,3 +16,4 @@ def login_logic(request):
 
     login(request, user)
     return JsonResponse({"message": "Login successful", "username": username})
+
