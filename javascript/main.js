@@ -1,33 +1,38 @@
+import { AutoProcessor, AutoModel, env } from 'https://cdn.jsdelivr.net/npm/@xenova/transformers@latest'
+
+// Prevent from trying to Load a model locally
+env.allowLocalModels = false
+
 const imageInput = document.getElementById('imageInput');
 const resultText = document.getElementById('resultText');
 
-document.getElementById('submissionButton').addEventListener('click', () => {
-    // Check if a file has been selected
-    if (imageInput.files.length > 0) {
-        const formData = new FormData();
-        formData.append('file', imageInput.files[0]);
+const modelName = 'prithivMLmods/Alphabet-Sign-Language-Detection'
+let processor = null
+let model = null
 
-        // Send request through CORS proxy
-        fetch('https://cors-anywhere.herokuapp.com/https://huggingface.co/spaces/sairusses/alphabet-sign-api/predict', {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Prediction Result:', data);
+try {
+    console.log('Attempting to Get Model Processor')
+    processor = await AutoProcessor.from_pretrained(modelName)
+}
+catch(e) {
+    console.error(e)
+    resultText.innerHTML = `<span style="color: red">${e}</span>`
+}
 
-            // Assuming the API response includes predicted_letter and confidence fields
-            if (data.predicted_letter && data.confidence) {
-                resultText.innerText = `Prediction: ${data.predicted_letter} (Confidence: ${data.confidence})`;
-            } else {
-                resultText.innerText = `Error: Unable to retrieve prediction.`;
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            resultText.innerText = `Error: ${error.message}`;
-        });
-    } else {
-        resultText.innerText = 'Error: No image selected. Please input an image.';
-    }
-});
+try {
+    model = await AutoModel.from_pretrained(modelName)
+}
+catch(e) {
+    console.error(e)
+    resultText.innerHTML = `<span style="color: red">${e}</span>`
+}
+
+document.getElementById('submissionButton').addEventListener('click', () => {});
+
+if(processor != null && model != null) {
+    // Actually do things
+}
+else {
+    console.error(`Model and/or Processor Failed to Load`)
+    resultText.innerHTML = `<span style="color: red">Model and/or Processor Failed to Load</span><br><span>View Console for More Details</span>`
+}
