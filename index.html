@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="index.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, width-device=width">
+    <title> SharpBang Login </title>
+  </head>
+  <body>
+    <div id="loginWindow" class="login">
+      <h1> SharpBang Login </h1>
+      <div>
+          <input type="email" id="emailInput" name="email" placeholder="Email Address" required>
+          <input type="password" id="passwordInput" name="password"  placeholder="Password" required>
+          <div class="auth-options">
+            <p>Forgot <a href="#">Password</a></p>
+            <label for="remember"><input id="remember" type="checkbox">Remember Me</label>
+          </div>    
+          <button id="submitCredentialsButton">Submit</button>
+          <p id="feedbackText" style="color:red"></p>
+        </div>
+     <p class="signUp">Dont have an account. <a href="#">Sign up</a></p>
+  </div>
+    <div id="programWindow" class="login" style="display: none">
+      <h1>ASL Letter Detector</h1>
+
+      <div id="asl-form">
+        <label for="image">Upload a hand sign image:</label>
+        <input type="file" id="imageInput" accept="image/*" required>
+
+        <button id="submissionButton" type="submit">Predict Letter</button>
+      </div>
+
+      <div id="preview-wrapper" style="margin-top:1.5em;">
+        <img id="preview" style="max-width:100%; display:none;" alt="Preview">
+      </div>
+
+      <p id="resultText" style="margin-top:1em; font-weight:bold;"></p>
+    </div>
+  </body>
+  <script src="javascript/main.js" type="module"></script>
+  <script src="javascript/login.js"></script>
+</html>
