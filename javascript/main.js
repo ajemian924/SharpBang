@@ -1,20 +1,33 @@
-import { pipeline, env } from 'https://cdn.jsdelivr.net/npm/@xenova/transformers@2.6.0';
+const imageInput = document.getElementById('imageInput');
+const resultText = document.getElementById('resultText');
 
-env.allowLocalModels = false
+document.getElementById('submissionButton').addEventListener('click', () => {
+    // Check if a file has been selected
+    if (imageInput.files.length > 0) {
+        const formData = new FormData();
+        formData.append('file', imageInput.files[0]);
 
-const imageInput = document.getElementById('imageInput')
-const resultText = document.getElementById('resultText')
+        // Send request through CORS proxy
+        fetch('https://cors-anywhere.herokuapp.com/https://huggingface.co/spaces/sairusses/alphabet-sign-api/predict', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Prediction Result:', data);
 
-resultText.innerText = 'Loading Model...'
-let model = null
-try {
-    model = await pipeline('image-classification','Abuzaid01/asl-sign-language-classifier')
-}
-catch(e) {
-    resultText.innerHTML = `Model Failed to Load: <span style="color: red">${e}</span>`
-}
-
-if (model !== null) {
-    // Actually Allow the Program to Run
-
-}
+            // Assuming the API response includes predicted_letter and confidence fields
+            if (data.predicted_letter && data.confidence) {
+                resultText.innerText = `Prediction: ${data.predicted_letter} (Confidence: ${data.confidence})`;
+            } else {
+                resultText.innerText = `Error: Unable to retrieve prediction.`;
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            resultText.innerText = `Error: ${error.message}`;
+        });
+    } else {
+        resultText.innerText = 'Error: No image selected. Please input an image.';
+    }
+});
