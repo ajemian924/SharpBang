@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="index.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, width=device-width">
+    <title>ASL Letter Detector</title>
+  </head>
+  <body>
+    <div class="login">
+      <h1>ASL Letter Detector</h1>
+
+      <form id="asl-form">
+        <label for="image">Upload a hand sign image:</label>
+        <input type="file" id="image" accept="image/*" required>
+
+        <button type="submit">Predict Letter</button>
+      </form>
+
+      <div id="preview-wrapper" style="margin-top:1.5em;">
+        <img id="preview" style="max-width:100%; display:none;" alt="Preview">
+      </div>
+
+      <p id="result" style="margin-top:1em; font-weight:bold;"></p>
+    </div>
+
+    <script>
+      const aslForm = document.getElementById("asl-form");
+      const imageInput = document.getElementById("image");
+      const preview = document.getElementById("preview");
+      const result = document.getElementById("result");
+
+      // Show a preview of the uploaded image
+      imageInput.addEventListener("change", () => {
+        const file = imageInput.files[0];
+        if (!file) return;
+
+        const url = URL.createObjectURL(file);
+        preview.src = url;
+        preview.style.display = "block";
+      });
+
+      aslForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const file = imageInput.files[0];
+        if (!file) {
+          result.textContent = "Please choose an image first.";
+          return;
+        }
+
+        const formData = new FormData();
+        formData.append("image", file);
+
+        // TODO: change `/predict` to your real backend endpoint
+        try {
+          const response = await fetch("/predict", {
+            method: "POST",
+            body: formData
+          });
+
+          const data = await response.json();
+          // assuming { letter: "A" }
+          result.textContent = `Predicted letter: ${data.letter}`;
+        } catch (err) {
+          console.error(err);
+          result.textContent = "Error predicting letter.";
+        }
+      });
+    </script>
+  </body>
+</html>
