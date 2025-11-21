@@ -16,3 +16,6 @@ By petitioning the software as a medical device we will get insurance companies 
 - Connor Hewitt
 - Keith Heath
 - Quoc Le
+
+## deliverables
+Website with a user login page and file input for sign language classification.
