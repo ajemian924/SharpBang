@@ -18,6 +18,19 @@ class Login {
 				}
 			});
 			if (count == 0) {
+				const username = document.querySelector("#username").value.trim();
+				const password = document.querySelector("#password").value.trim();
+
+				let users = JSON.parse(localStorage.getItem("users")) || [];
+				const found = users.find(
+					u => u.username === username && u.password === password
+				);
+
+				if (!found) {
+    				alert("Invalid username or password");
+   					 return;
+				}
+
 				localStorage.setItem("auth", 1);
 				this.form.submit();
 			}
@@ -73,4 +86,5 @@ const form = document.querySelector(".loginForm");
 if (form) {
 	const fields = ["username", "password"];
 	const validator = new Login(form, fields);
+
 }
